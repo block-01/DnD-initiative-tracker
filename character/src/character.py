@@ -1,9 +1,4 @@
 import json
-from csv import reader
-
-player_file: str = (
-    "characters.csv"  # Being removed once it's all moved over to the JSON file.
-)
 
 
 class CharacterStats:
@@ -46,27 +41,7 @@ class CharacterData:
         self.character_stats: CharacterStats = character_stats
 
 
-def read_player_file() -> (
-    dict[str, str]
-):  # TODO Replace CSV system fully with JSON files.
-    """Reads the player file CSV file.
-
-    Returns:
-        A dictionary of the player and character names.
-    """
-
-    players_dict: dict[str, str] = {}  # a dict of the player and character names
-
-    with open(player_file, newline="") as file_contents:
-        contents = reader(file_contents, delimiter=" ", quotechar=",")
-        for player in contents:
-            players_dict[player[1]] = player[0]
-
-    return players_dict
-
-
 class CharacterFiles:
-
     def create_character_data(
         self,
         player_name: str,
@@ -138,8 +113,8 @@ class CharacterFiles:
         players_data: list[CharacterData] = []
 
         with open(path, "r") as json_file:
-            json_contents: dict[str, dict[str, str | int | dict[str, int]]] = (
-                json.loads(json_file.read())
+            json_contents: dict[str, dict[str, str | int | dict[str, int]]] = json.loads(
+                json_file.read()
             )
 
         for item in json_contents:

@@ -5,7 +5,9 @@ from character_selection import character_selection
 from initative_tracker.window import window
 from character import character
 
-player_info: dict[str, str] = character.read_player_file()
+player_info: list[character.CharacterData] = character.CharacterFiles.read_player_files(
+    character.CharacterFiles
+)
 
 if __name__ == "__main__":
     dnd_helper_options: ArgumentParser = ArgumentParser(
@@ -35,9 +37,7 @@ if __name__ == "__main__":
         print(character_selection.select_random_player(player_info))
 
     elif args.assign_random:
-        player_dict: dict[str, int] = character_selection.assign_player_number(
-            player_info
-        )
+        player_dict: dict[str, int] = character_selection.assign_player_number(player_info)
 
         for name, number in player_dict.items():
             print(f"Player '{name}' has been assigned the number '{number}'")
@@ -46,32 +46,4 @@ if __name__ == "__main__":
         window.window_main()
 
     else:
-        character.CharacterFiles.write_player_files(
-            character.CharacterFiles,
-            [
-                character.CharacterFiles.create_character_data(
-                    character.CharacterFiles,
-                    "Player-01",
-                    "test char",
-                    "test_class",
-                    "test_subclass",
-                    0,
-                    10,
-                    10,
-                ),
-                character.CharacterFiles.create_character_data(
-                    character.CharacterFiles,
-                    "Player-02",
-                    "test char",
-                    "test_class",
-                    "test_subclass",
-                    0,
-                    10,
-                    10,
-                ),
-            ],
-        )  # TODO: Debugging Info, will be moved eventually
-        character.CharacterFiles.read_player_files(
-            character.CharacterFiles
-        )  # TODO: Debugging Info, will be moved eventually
         print("Use --help to show available options.")
