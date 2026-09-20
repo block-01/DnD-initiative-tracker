@@ -1,3 +1,2 @@
-player_data.json
-characters.csv
-__pycache__
+*/target
+Cargo.lock
